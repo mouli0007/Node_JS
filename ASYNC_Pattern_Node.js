@@ -32,5 +32,43 @@ getText("./content/mouli-profile.txt")
   .then((e) => console.log(e))
   .catch((e) => console.log(e));
 
+##### Handleing the promise in async 
+
+const start = async () => {
+  try {
+    const first = await getText("./content/mouli-profile.txt");
+    console.log(first);
+  } catch (err) {
+    console.log("Eroor occured in your async file");
+  }
+};
+
+start();
+
 
 ##################### Async Way to Do Things #####################
+
+
+const { readFile, writeFile } = require("fs");
+const util = require("util");
+
+const readFilePromise = util.promisify(readFile);
+const writeFilePromise = util.promisify(writeFile);
+
+const start = async () => {
+  try {
+    await writeFilePromise(
+      "./content/mouli-profile.txt",
+      "Mouli VJ is getting bigger and bigger ",
+      {
+        flag: "a",
+      }
+    );
+    const first = await readFilePromise("./content/mouli-profile.txt", "utf8");
+    console.log(first);
+  } catch (err) {
+    console.log("Eroor occured in your async file");
+  }
+};
+
+start();
